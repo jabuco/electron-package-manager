@@ -1,11 +1,12 @@
-import * as child_process from 'child_process';
-import * as path from 'path';
-import * as fs from 'fs';
-import * as tar from 'tar';
-import * as mkdirp from 'mkdirp';
-import { ForkOptions } from 'child_process';
+import * as child_process from "child_process";
+import * as path from "path";
+import * as fs from "fs";
+import * as tar from "tar";
+import * as mkdirp from "mkdirp";
+import { ForkOptions } from "child_process";
 
-const npmPath = require.resolve('npm/bin/npm-cli');
+declare var __non_webpack_require__: any;
+const npmPath = (__non_webpack_require__ || require).resolve("npm/bin/npm-cli");
 
 /**
  * async/await version `child_process.fork` that returns stdout as a string
@@ -14,27 +15,35 @@ const npmPath = require.resolve('npm/bin/npm-cli');
  * @param {"child_process".ForkOptions} options
  * @returns {Promise<string>}
  */
-export async function fork(command: string, args: string[], options: ForkOptions) {
+export async function fork(
+  command: string,
+  args: string[],
+  options: ForkOptions
+) {
   return new Promise<string>((resolve, reject) => {
     let buffers: Buffer[] = [];
 
     const child = child_process.fork(command, args, options);
 
     if (child.stdout !== null) {
-      child.stdout.on('data', (data) => {
+      child.stdout.on("data", data => {
         if (Buffer.isBuffer(data)) {
           buffers.push(data);
-        } else if (typeof data === 'string') {
-          buffers.push(Buffer.from(data, 'utf-8'));
+        } else if (typeof data === "string") {
+          buffers.push(Buffer.from(data, "utf-8"));
         }
       });
     }
 
-    child.on('close', () => {
-      resolve(Buffer.concat(buffers).toString('utf-8').trim());
+    child.on("close", () => {
+      resolve(
+        Buffer.concat(buffers)
+          .toString("utf-8")
+          .trim()
+      );
     });
 
-    child.on('error', reject);
+    child.on("error", reject);
   });
 }
 
@@ -46,7 +55,7 @@ export async function fork(command: string, args: string[], options: ForkOptions
  */
 export async function pack(packagename: string, cwd: string) {
   await asyncMkdirp(cwd);
-  return await fork(npmPath, ['pack', packagename], {
+  return await fork(npmPath, ["pack", packagename], {
     cwd: cwd,
     execArgv: [],
     silent: true
@@ -82,7 +91,11 @@ async function asyncUnlink(filepath: string) {
  * @param {string} filepath
  * @returns {Promise<string>}
  */
-export async function extract(packagename: string, cwd: string, filepath: string) {
+export async function extract(
+  packagename: string,
+  cwd: string,
+  filepath: string
+) {
   const extractdir = path.join(cwd, packagename);
   await asyncMkdirp(extractdir);
   await tar.x({
@@ -91,10 +104,14 @@ export async function extract(packagename: string, cwd: string, filepath: string
     strip: 1
   });
   await asyncUnlink(filepath);
-  await fork(npmPath, ['install', '--no-save', '--no-package-lock', '--silent', '--production'], {
-    cwd: extractdir,
-    execArgv: []
-  });
+  await fork(
+    npmPath,
+    ["install", "--no-save", "--no-package-lock", "--silent", "--production"],
+    {
+      cwd: extractdir,
+      execArgv: []
+    }
+  );
 
   return extractdir;
 }

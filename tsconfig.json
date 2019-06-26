@@ -13,11 +13,7 @@
     "inlineSources": true,
     "module": "commonjs",
     "target": "es2016",
-    "lib": [
-      "es2017"
-    ]
+    "lib": ["es2017"]
   },
-  "include": [
-    "src/*.ts"
-  ]
+  "include": ["src/*.ts"]
 }
