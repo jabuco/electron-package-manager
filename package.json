@@ -1,11 +1,14 @@
 {
-  "name": "electron-package-manager",
+  "name": "@jabuco/epm",
   "version": "1.0.0",
   "description": "Dynamically install and require modules in electron",
   "main": "lib/index.js",
   "types": "./lib/index.d.ts",
-  "repository": "git@github.com:getstation/electron-package-manager.git",
-  "author": "Joël Charles <joel@getstation.com>",
+  "repository": "git@github.com:jabuco/electron-package-manager.git",
+  "contributors": [
+    "Joël Charles <joel@getstation.com>"
+  ],
+  "author": "JABUCO",
   "license": "MIT",
   "scripts": {
     "build": "tsc -p ./ --outDir lib",
@@ -13,13 +16,13 @@
   },
   "dependencies": {
     "mkdirp": "^0.5.1",
-    "npm": "^5.5.1",
-    "tar": "^4.0.2"
+    "npm": "^6.9.0",
+    "tar": "^4.4.10"
   },
   "devDependencies": {
-    "@types/mkdirp": "^0.5.1",
-    "@types/tar": "^4.0.0",
+    "@types/mkdirp": "^0.5.2",
+    "@types/tar": "^4.0.1",
     "tsc": "^1.20150623.0",
-    "typescript": "^2.6.1"
+    "typescript": "^3.5.2"
   }
 }
