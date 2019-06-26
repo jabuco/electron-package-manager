@@ -1,6 +1,6 @@
 {
   "name": "@jabuco/epm",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Dynamically install and require modules in electron",
   "private": false,
   "main": "lib/index.js",
