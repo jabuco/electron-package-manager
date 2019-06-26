@@ -2,6 +2,7 @@
   "name": "@jabuco/epm",
   "version": "1.0.0",
   "description": "Dynamically install and require modules in electron",
+  "private": false,
   "main": "lib/index.js",
   "types": "./lib/index.d.ts",
   "repository": "git@github.com:jabuco/electron-package-manager.git",
