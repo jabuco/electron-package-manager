@@ -6,7 +6,14 @@ import * as mkdirp from "mkdirp";
 import { ForkOptions } from "child_process";
 
 declare var __non_webpack_require__: any;
-const npmPath = (__non_webpack_require__ || require).resolve("npm/bin/npm-cli");
+const __req = (() => {
+  const isset = global.hasOwnProperty("__non_webpack_require__");
+  if (isset) {
+    return __non_webpack_require__;
+  }
+  return require;
+})();
+const npmPath = __req.resolve("npm/bin/npm-cli");
 
 /**
  * async/await version `child_process.fork` that returns stdout as a string
